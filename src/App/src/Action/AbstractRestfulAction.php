@@ -153,6 +153,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Fetch a single record (GET method)
+     * @codeCoverageIgnore
      * @param mixed $id
      * @return mixed
      */
@@ -163,6 +164,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Fetch a collection of records (GET method)
+     * @codeCoverageIgnore
      * @param array $params
      * @return mixed
      */
@@ -173,6 +175,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Create a new record
+     * @codeCoverageIgnore
      * @param array $data
      * @return mixed
      */
@@ -183,6 +186,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Patch single record (PATCH method)
+     * @codeCoverageIgnore
      * @param mixed $id
      * @param array $data
      * @return mixed
@@ -194,6 +198,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Patch a collection of records (PATCH method)
+     * @codeCoverageIgnore
      * @param array $data
      * @return mixed
      */
@@ -204,6 +209,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Delete a single record (DELETE method)
+     * @codeCoverageIgnore
      * @param mixed $id
      * @return mixed
      */
@@ -214,6 +220,7 @@ abstract class AbstractRestfulAction implements MiddlewareInterface
 
     /**
      * Delete a collection of records (DELETE method)
+     * @codeCoverageIgnore
      * @param array $data
      * @return mixed
      */

@@ -8,6 +8,9 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\TextResponse;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Home implements MiddlewareInterface
 {
     /**

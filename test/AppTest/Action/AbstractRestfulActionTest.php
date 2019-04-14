@@ -96,6 +96,31 @@ class AbstractRestfulActionTest extends TestCase
         $this->assertContains('"page_size":32,', $content);
     }
 
+    public function testEntityResponse()
+    {
+        $this->request->getAttribute(PropagateRestfulActionMiddleware::class)->willReturn('fetch');
+        $this->request->getQueryParams()->willReturn([]);
+
+        $entity = new Entity();
+        /** @var AbstractRestfulAction $stub */
+        $stub = new class extends AbstractRestfulAction {
+            public function fetch($params = [])
+            {
+                return new Entity();
+            }
+        };
+
+        /** @var HtmlResponse $result */
+        $result = $stub->process($this->request->reveal(), $this->handler->reveal());
+
+        $this->assertInstanceOf(JsonResponse::class, $result);
+        $this->assertEquals(200, $result->getStatusCode());
+
+        $content = $result->getBody()->getContents();
+        $this->assertNotEmpty($content);
+        $this->assertEquals(json_encode($entity->getArrayCopy()), $content);
+    }
+
     public function testScalarResponse()
     {
         $this->request->getAttribute(PropagateRestfulActionMiddleware::class)->willReturn('fetchAll');
