@@ -17,7 +17,8 @@ To run it in docker:
 To run tests just use
 * `$ composer check`
 
-It will analyse code with `phpstan` and `phpcs` and after that it'll check for `phpunit` tests
+It will analyse code with `phpstan` and `phpcs` and after that it'll check for `phpunit` tests.
+Additionally there is `phan` config included for more detailed code scan.
 
 For **e2e** tests use `newman`, a Postman CLI automation client
 * To install it use: `$ npm install -g newman`

@@ -22,6 +22,7 @@ class Ping implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $params = $request->getServerParams();
         return new JsonResponse([
             'ack'  => time(),
             'mean' => microtime(true) - ($params['REQUEST_TIME_FLOAT'] ?? 0),

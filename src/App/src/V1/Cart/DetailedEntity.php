@@ -2,9 +2,6 @@
 
 namespace App\V1\Cart;
 
-use Ramsey\Uuid\UuidInterface;
-use Zend\Stdlib\ArraySerializableInterface;
-
 class DetailedEntity extends Entity
 {
     /**
