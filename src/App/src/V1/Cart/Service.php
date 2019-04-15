@@ -63,11 +63,8 @@ class Service
         $find = $this->mongo->find($filter);
         $process = [];
         foreach ($find as $document) {
-            $document = (array) $document;
-            unset($document['items']);
-
             $entity = new Entity();
-            $entity->exchangeArray($document);
+            $entity->exchangeArray((array) $document);
             $process[] = $entity;
         }
 
@@ -103,14 +100,14 @@ class Service
             });
         }
 
-        $entity = new DetailedEntity();
+        $entity = new Entity();
         $entity->exchangeArray([
             'uuid'   => $uuid,
             'status' => Entity::STATUS_CREATED,
-            'items'  => $items
         ]);
 
         $this->mongo->insertOne([
+            'items'  => $items,
             'created_at' => time(),
             'updated_at' => time()
         ] + $entity->getArrayCopy());

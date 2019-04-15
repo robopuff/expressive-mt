@@ -31,8 +31,8 @@ class Entity implements ArraySerializableInterface
     public function exchangeArray(array $array): void
     {
         $this->id = $array['id'] ?? 0;
-        $this->unitPrice = abs($array['unit_price'] ?? 0);
-        $this->qty = abs($array['qty'] ?? 1);
+        $this->unitPrice = (int) abs($array['unit_price'] ?? 0);
+        $this->qty = (int) abs($array['qty'] ?? 1);
     }
 
     /**
