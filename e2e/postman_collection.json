@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "75506ea4-c39f-4fc5-9ec3-75616f350203",
+		"name": "mt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3650a38f-00a0-49e2-a3c8-7f52407f7858",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has `ack`\"] = jsonData.ack;",
+							"tests[\"Has `mean`\"] = jsonData.mean;",
+							"tests[\"Has `server_time`\"] = jsonData.server_time;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/ping",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cart - create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3650a38f-00a0-49e2-a3c8-7f52407f7858",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has `uuid`\"] = jsonData.uuid;",
+							"tests[\"Has `status`\"] = jsonData.status;",
+							"tests[\"Status is equal to created\"] = jsonData.status === 'created';",
+							"tests[\"Has `items`\"] = jsonData.items;",
+							"tests[\"Items is not empty\"] = jsonData.items.length > 0;",
+							"",
+							"if (jsonData.uuid) {",
+							"    pm.environment.set(\"cart.id\", jsonData.uuid);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": [\n\t\t{\n\t\t\t\"id\": 123,\n\t\t\t\"unit_price\": 2554300,\n\t\t\t\"qty\": 1\n\t\t},\n\t\t{\n\t\t\t\"id\": 1245,\n\t\t\t\"unit_price\": 344400,\n\t\t\t\"qty\": 7\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/cart",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cart - get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3650a38f-00a0-49e2-a3c8-7f52407f7858",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has has `uuid`\"] = jsonData.uuid;",
+							"tests[\"Has has `status`\"] = jsonData.status;",
+							"tests[\"Has has `items`\"] = jsonData.items;",
+							"",
+							"tests[\"Uuid is same as sent\"] = jsonData.uuid === pm.environment.get(\"cart.id\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/cart/{{cart.id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cart",
+						"{{cart.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cart - update items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3650a38f-00a0-49e2-a3c8-7f52407f7858",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has `uuid`\"] = jsonData.uuid;",
+							"tests[\"Has `status`\"] = jsonData.status;",
+							"tests[\"Status is equal to created\"] = jsonData.status === 'created';",
+							"tests[\"Has `items`\"] = jsonData.items;",
+							"tests[\"Items is not empty\"] = jsonData.items.length > 0;",
+							"",
+							"if (jsonData.uuid) {",
+							"    pm.environment.set(\"cart.id\", jsonData.uuid);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": [\n\t\t{\n\t\t\t\"id\": 123,\n\t\t\t\"qty\": 0\n\t\t},\n\t\t{\n\t\t\t\"id\": 1245,\n\t\t\t\"qty\": 12\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/cart/{{cart.id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cart",
+						"{{cart.id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cart - list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3650a38f-00a0-49e2-a3c8-7f52407f7858",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has `_embedded`\"] = jsonData._embedded;",
+							"",
+							"if (jsonData._embedded.length > 0) {",
+							"    tests[\"Embeded data has `uuid`\"] = jsonData._embedded[0].uuid;",
+							"    tests[\"Embeded data has `status`\"] = jsonData._embedded[0].status;",
+							"}",
+							"",
+							"tests[\"Has `page`\"] = jsonData.page;",
+							"tests[\"Has `page_count`\"] = jsonData.page_count;",
+							"tests[\"Has `page_size`\"] = jsonData.page_size;",
+							"tests[\"Has `total_items`\"] = jsonData.total_items;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/cart",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cart - remove cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3650a38f-00a0-49e2-a3c8-7f52407f7858",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Has has `uuid`\"] = jsonData.uuid;",
+							"tests[\"Has has `status`\"] = jsonData.status;",
+							"tests[\"Has has `items`\"] = jsonData.items;",
+							"",
+							"tests[\"Status is deleted\"] = jsonData.status === 'deleted';",
+							"tests[\"Uuid is same as sent\"] = jsonData.uuid === pm.environment.get(\"cart.id\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/cart/{{cart.id}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cart",
+						"{{cart.id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
