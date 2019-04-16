@@ -94,10 +94,9 @@ class Service
         $uuid = Uuid::uuid4();
 
         if (!empty($items)) {
-            $items = $this->processItems($items);
-            array_walk($items, static function (ItemEntity &$item) {
-                $item = $item->getArrayCopy();
-            });
+            $items = array_map(static function (ItemEntity $item) {
+                return $item->getArrayCopy();
+            }, $this->processItems($items));
         }
 
         $entity = new Entity();
@@ -198,13 +197,10 @@ class Service
      */
     private function processItems(array $items): array
     {
-        $processed = [];
-        foreach ($items as $item) {
+        return array_map(static function (array $item) {
             $entity = new ItemEntity();
             $entity->exchangeArray($item);
-
-            $processed[] = $entity;
-        }
-        return $processed;
+            return $entity;
+        }, $items);
     }
 }
